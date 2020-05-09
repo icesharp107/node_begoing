@@ -1,5 +1,5 @@
 /*    连接池=复用连接，要的就取，不用放回 
-创建连接池 mysql.creatPool()
+创建连接池 mysql.creatPool( db对象配置)
 从池内获取连接 getConnection()
 释放连接  release()
 */
