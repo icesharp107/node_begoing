@@ -12,3 +12,4 @@ dbOption = {
 module.exports = dbOption
 
 // 导出dbOption对象，里面是db配置
+// 最大连接数量：connectionLimit:10
