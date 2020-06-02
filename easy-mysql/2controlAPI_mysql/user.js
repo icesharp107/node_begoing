@@ -50,4 +50,11 @@ module.exports = {
  addUser(urlObj) name,city,sex
  deleteUser(id)
  updateUser(id,userObj)
+
+ 占位符的形式connection.query(sqlString, values, callback)
+ conn.query(
+     { sql:'',timeout:4000},
+     [],
+     function(){}
+ )
 */

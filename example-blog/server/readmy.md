@@ -21,6 +21,8 @@
             >req.params.name='abc
 
     * npm install jsonwebtoken -S
+    * npm install express-jwt 解密token中间件
+        * 它默认token，在headers里的Authorization，所以前端需要设置一下
     * token
         * header
         * playload 信息

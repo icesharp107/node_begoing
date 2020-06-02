@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const querySql = require('../db/index')
-const { PWD_SALT } = require('../untils/constant')
+const { PWD_SALT,PRIVATE_KEY,EXPIRESD } = require('../untils/constant')
 const { md5 } = require('../untils/index')
 
 /* GET users listing. */
@@ -53,7 +53,8 @@ router.post('/login', async (req, res, next) => {
       if (!result || result.length === 0) {
         res.send({ code: -1, msg: '账号或者密码不正确' })
       } else {
-        
+        let token = jwt.sign({username},PRIVATE_KEY,{expiresIn:EXPIRESD})
+        res.send({code:0,msg:'登录成功',token:token})
       }
     }
   } catch (e) {
@@ -62,6 +63,28 @@ router.post('/login', async (req, res, next) => {
   }
 })
 
+/* 
+与登录类似：（username，passward）
+sql语句查询>判断用户是否存在>存在,用户名与密码一致吗>是，给token
+ 将密码加密 =md5（密码+密钥）
+ token = jwt.sign签名方法：用户名+个人密钥+有限期
+          {username},PRIVATE_KEY,{expiresIn:EXPIRESD}的签名函数
+          private_key 密钥
+          expiresIn是有限期：60*60*24一天
+*/
 
+//获取用户信息接口
+router.post('/info', function (req, res, next) {
+  let { nickname,head_img } = req.body
+  let {username} = req.user
+  try {
+    let user = await querySql('update user set nickname = ?,head)img = ? where username = ?', [username])
+      console.log(result)
+      res.send({ code: 0, msg: '更新成功',data:null})
+  } catch (e) {
+    console.log(e)
+    next(e)
+  }
+})
 
 module.exports = router;
